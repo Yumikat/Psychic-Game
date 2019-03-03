@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Psychic Game</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css"
+        href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/slate/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+</head>
+
+<body>
+    <div>
+        <h1>The Psychic Game</h1>
+        <p id="directions-text">Guess what letter I'm thinking of</p>
+        <p>Wins: <span id="wins-text"></span></p>
+        <p>Losses: <span id="losses-text"></span></p>
+        <p>Guesses left: <span id="remaining-text"></span></p>
+        <p>Your guesses so far: <span id="guesses-text"></span></p>
+    </div>
+
+    <script type="text/javascript">
+
+        //     //Array or string of computer choices from alphabet
+        var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+        //     //Variables that need to be defined for the game
+        var wins = 0;
+        var losses = 0;
+        var remaining = 9;
+        var guessList = [];
+
+        // //Make computer randomly choose a letter from array
+        var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+        //     //Variables for placeholders in HTML for display
+        var winsText = document.getElementById("wins-text");
+        var lossesText = document.getElementById("losses-text");
+        var remainingText = document.getElementById("remaining-text");
+        var guessesText = document.getElementById("guesses-text");
+
+        winsText.textContent = wins;
+        lossesText.textContent = losses;
+        remainingText.textContent = remaining;
+
+        //     //User key press 
+        document.onkeyup = function (event) {
+            var userGuess = event.key.toLowerCase();
+            console.log(userGuess);
+
+
+            // //If/else to determine if the user gets a win or loss
+            // for (var remaining = 9; remaining > 0; remaining--) {
+            if (userGuess !== computerGuess) {
+                remaining--;
+                guessList.push(userGuess);
+                guessesText.textContent = guessList;
+                if (remaining === 0) {
+                    remaining = 9;
+                    losses++;
+                    function empty() {
+                        guessList.length = 0;
+                    }
+                    empty();
+                    guessesText.textContent = "";
+                    computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+                    alert("Sorry, you lost, try again!!!");
+                }
+            }
+            else {
+                function empty() {
+                    guessList.length = 0;
+                }
+                empty();
+                guessesText.textContent = "";
+                wins++;
+                remaining = 9;
+                computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+                alert("YOU WON!!!");
+            }
+            console.log(computerGuess);
+            console.log("\n-------------");
+
+            winsText.textContent = wins;
+            lossesText.textContent = losses;
+            remainingText.textContent = remaining;
+
+
+        };
+
+
+    </script>
+
+</body>
+
+</html>
